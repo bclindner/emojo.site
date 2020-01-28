@@ -69,13 +69,13 @@ const constants = {
     }
   },
   "default": {
-    "emojis": "cate",
+    "emoji": "cate",
     "animations": ["bounce", "flip"],
     "sound": "smwcredits",
     "speed": 1,
     "caption": null,
     "captionType": "default",
-    "background": "rainbow",
+    "background": null,
   }
 }
 
