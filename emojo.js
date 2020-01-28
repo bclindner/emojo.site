@@ -41,9 +41,14 @@ const constants = {
       "length": 2,
       "extra": "linear infinite"
     },
-    "slowzoom": {
-      "name": "slowzoom",
+    "zoom": {
+      "name": "zoom",
       "length": 50000,
+      "extra": "linear"
+    },
+    "slowzoom": {
+      "name": "zoom",
+      "length": 100000,
       "extra": "linear"
     },
     "shake": {

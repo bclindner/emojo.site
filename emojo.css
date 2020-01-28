@@ -91,7 +91,7 @@ button {
   }
 }
 
-@keyframes slowzoom {
+@keyframes zoom {
   100% {
     transform: scale(10000);
   }
