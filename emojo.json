@@ -1,0 +1,36 @@
+{
+  "emojis": {
+    "blurry": "emojis/blurry.png",
+    "cate": "emojis/cate.png",
+    "catto": "emojis/catto.png",
+    "freddiecat": "emojis/freddiecat.png",
+    "polite": "emojis/polite.png",
+    "sad": "emojis/sad.png",
+    "sadder": "emojis/sadder.png",
+    "smug": "emojis/smug.png"
+  },
+  "animations": {
+    "bounce": {
+      "name": "bounce",
+      "length": 1
+    },
+    "spin": {
+      "name": "spin",
+      "length": 1
+    }
+  },
+  "sound": {
+    "smwcredits": {
+      "path": "sounds/smwcredits.mp3",
+      "lengthMultiplier": "0.35"
+    }
+  },
+  "default": {
+    "emoji": "cate",
+    "animations": ["bounce"],
+    "sound": "smwcredits",
+    "speed": 1,
+    "caption": null,
+    "background": "colored"
+  }
+}
