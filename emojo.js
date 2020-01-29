@@ -67,16 +67,20 @@ const constants = {
       "extra": "ease-out infinite"
     }
   },
-  "sound": {
+  "music": {
     "smwcredits": {
       "path": "sounds/smwcredits.mp3",
       "beat": 0.395
+    },
+    "temmie": {
+      "path": "sounds/temmie.mp3",
+      "beat": 0.715
     }
   },
   "default": {
     "emoji": ["cate"],
     "animations": ["bounce", "flip"],
-    "sound": "smwcredits",
+    "music": "smwcredits",
     "speed": 1,
     "caption": null,
     "captionType": "default",
@@ -101,13 +105,13 @@ function renderEmojopage(root, config) {
     }
     caption.innerText = config.caption
   }
-  // set up sound
-  const audioConfig = constants.sound[config.sound]
+  // set up music
+  const audioConfig = constants.music[config.music]
   const audio = root.appendChild(document.createElement("audio"))
   root.appendChild(audio)
   audio.loop = true
   audio.controls = false
-  audio.src = constants.sound[config.sound].path
+  audio.src = constants.music[config.music].path
   audio.playbackRate = config.speed
   // add nested animation divs
   let emojiContainer = container;
@@ -183,8 +187,8 @@ function parseArguments() {
     console.warn("failed to parse speed; continuing with defaults")
     config.emojiInterval = constants.default.emojiInterval
   }
-  // sound
-  config.sound = urlParams.get("sound") || constants.default.sound;
+  // music
+  config.music = urlParams.get("music") || constants.default.music;
   // background
   config.background = urlParams.get("bg") || constants.default.background;
   // caption
