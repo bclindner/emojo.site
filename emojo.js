@@ -111,6 +111,13 @@ function renderEmojopage(root, config) {
   root.appendChild(audio)
   audio.loop = true
   audio.controls = false
+  const audioLoadPromise = new Promise((resolve, reject) => {
+    try {
+      audio.addEventListener("loadeddata", resolve)
+    } catch (e) {
+      reject(e)
+    }
+  })
   audio.src = constants.music[config.music].path
   audio.playbackRate = config.speed
   // add nested animation divs
@@ -132,8 +139,15 @@ function renderEmojopage(root, config) {
       emoji.src = constants.emojis[config.emoji[i % config.emoji.length]]
     }, audioConfig.beat * config.emojiInterval * 1000)
   }
+  const emojiPromise = new Promise((resolve, reject) => {
+    try {
+      emoji.addEventListener("load", resolve)
+    } catch (e) {
+      reject(e)
+    }
+  })
   emoji.src = constants.emojis[config.emoji[0]]
-  audio.play()
+  Promise.all([emojiPromise, audioLoadPromise]).then(() => audio.play())
 }
 
 function parseArguments() {
