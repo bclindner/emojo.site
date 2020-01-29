@@ -12,13 +12,13 @@ const constants = {
   },
   "backgrounds": {
     "rainbow": "emojo-bg-rainbow",
-    "red": "emojo-bg-red",
+    "red": "emojo-bg-red"
   },
   "captionTypes": {
     "default": ["emojo-caption-default"],
     "above": ["emojo-caption-default", "emojo-caption-above"],
     "comicsans": ["emojo-caption-sans"],
-    "comicsans-above": ["emojo-caption-sans", "emojo-caption-above"],
+    "comicsans-above": ["emojo-caption-sans", "emojo-caption-above"]
   },
   "animations": {
     "bounce": {
@@ -70,21 +70,22 @@ const constants = {
   "sound": {
     "smwcredits": {
       "path": "sounds/smwcredits.mp3",
-      "beat": "0.388"
+      "beat": 0.388,
+      "bar": 1.552
     }
   },
   "default": {
-    "emoji": "cate",
+    "emoji": ["cate"],
     "animations": ["bounce", "flip"],
     "sound": "smwcredits",
     "speed": 1,
     "caption": null,
     "captionType": "default",
-    "background": null,
+    "background": null
   }
 }
 
-async function renderEmojopage(root, config) {
+function renderEmojopage(root, config) {
   // add container div
   const container = root.appendChild(document.createElement("div"))
   container.classList.add("emojo-container");
@@ -118,9 +119,14 @@ async function renderEmojopage(root, config) {
       config.speed}s ${animConfig.extra}`;
     emojiContainer = animDiv;
   }
-  // add emoji
   const emoji = emojiContainer.appendChild(document.createElement('img'))
-  emoji.src = constants.emojis[config.emoji]
+  // set up emoji interval
+  let i = 0
+  setInterval(() => {
+    i++
+    emoji.src = constants.emojis[config.emoji[i % config.emoji.length]]
+  }, audioConfig.bar * 1000)
+    emoji.src = constants.emojis[config.emoji[0]]
   audio.play()
 }
 
@@ -128,7 +134,12 @@ function parseArguments() {
   let config = {}
   const urlParams = new URLSearchParams(window.location.search)
   // emoji
-  config.emoji = urlParams.get("emoji") || constants.default.emoji;
+  const emojiList = urlParams.get("emoji");
+  if (emojiList) {
+    config.emoji = emojiList.split(" ")
+  } else {
+    config.emoji = constants.default.emoji
+  }
   // animations
   const animationsList = urlParams.get("anims")
   if (animationsList) {

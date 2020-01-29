@@ -15,6 +15,7 @@ button {
   padding: 16px;
   background-color: blue;
   color: white;
+  border: none;
 }
 
 /**
