@@ -70,8 +70,7 @@ const constants = {
   "sound": {
     "smwcredits": {
       "path": "sounds/smwcredits.mp3",
-      "beat": 0.388,
-      "bar": 1.552
+      "beat": 0.395
     }
   },
   "default": {
@@ -81,7 +80,8 @@ const constants = {
     "speed": 1,
     "caption": null,
     "captionType": "default",
-    "background": null
+    "background": null,
+    "emojiInterval": 4
   }
 }
 
@@ -120,13 +120,15 @@ function renderEmojopage(root, config) {
     emojiContainer = animDiv;
   }
   const emoji = emojiContainer.appendChild(document.createElement('img'))
-  // set up emoji interval
-  let i = 0
-  setInterval(() => {
-    i++
-    emoji.src = constants.emojis[config.emoji[i % config.emoji.length]]
-  }, audioConfig.bar * 1000)
-    emoji.src = constants.emojis[config.emoji[0]]
+  // set up emoji interval, if more than one emoji is in the list
+  if (config.emoji.length > 1) {
+    let i = 0
+    setInterval(() => {
+      i++
+      emoji.src = constants.emojis[config.emoji[i % config.emoji.length]]
+    }, audioConfig.beat * config.emojiInterval * 1000)
+  }
+  emoji.src = constants.emojis[config.emoji[0]]
   audio.play()
 }
 
@@ -164,6 +166,23 @@ function parseArguments() {
     console.warn("failed to parse speed; continuing with defaults")
     config.speed = constants.default.speed
   }
+  // emoji interval
+  try {
+    const rawEmojiInterval = urlParams.get("eint")
+    if (rawEmojiInterval) {
+      const emojiInterval = Number(rawEmojiInterval)
+      if (emojiInterval) {
+        config.emojiInterval = emojiInterval
+      } else {
+        config.emojiInterval = constants.default.emojiInterval
+      }
+    } else {
+      config.emojiInterval = constants.default.emojiInterval
+    }
+  } catch (e) {
+    console.warn("failed to parse speed; continuing with defaults")
+    config.emojiInterval = constants.default.emojiInterval
+  }
   // sound
   config.sound = urlParams.get("sound") || constants.default.sound;
   // background
@@ -172,6 +191,7 @@ function parseArguments() {
   config.caption = urlParams.get("caption") || constants.default.caption;
   // caption type
   config.captionType = urlParams.get("captiontype") || constants.default.captionType;
+  // change interval
   return config
 }
 
