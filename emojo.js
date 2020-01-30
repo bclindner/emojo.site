@@ -153,6 +153,12 @@ function renderEmojopage(root, config) {
 function parseArguments() {
   let config = {}
   const urlParams = new URLSearchParams(window.location.search)
+  // if d (the json config) is set, decode that base64 and use that instead
+  const jsonData = urlParams.get("d");
+  if(jsonData) {
+    config = JSON.parse(atob(jsonData))
+    return config
+  }
   // emoji
   const emojiList = urlParams.get("emoji");
   if (emojiList) {
@@ -209,7 +215,8 @@ function parseArguments() {
   config.caption = urlParams.get("caption") || constants.default.caption;
   // caption type
   config.captionType = urlParams.get("captiontype") || constants.default.captionType;
-  // change interval
+  // console log the base64 encode in case the user wants to hide what they're sending
+  console.log(btoa(JSON.stringify(config)))
   return config
 }
 
