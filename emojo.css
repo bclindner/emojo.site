@@ -126,3 +126,4 @@ button {
   background-image: linear-gradient(to right, red,orange,yellow,green,blue,indigo,violet);
 }
 .emojo-bg-red { background-color: red; }
+.emojo-bg-black { background-color: black; }
